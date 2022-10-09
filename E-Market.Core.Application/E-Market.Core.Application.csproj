@@ -20,10 +20,4 @@
     <ProjectReference Include="..\E-Market.Core.Domain\E-Market.Core.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="ViewModels\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
