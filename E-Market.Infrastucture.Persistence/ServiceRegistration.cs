@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using E_Market.Infrastucture.Persistence.Repositories;
 
 namespace E_Market.Infrastructure.Persistence
 {
@@ -36,6 +37,7 @@ namespace E_Market.Infrastructure.Persistence
             services.AddTransient<IAnuncioRepository, AnuncioRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IFotoRepository, FotoRepository>();
             #endregion
         }
     }

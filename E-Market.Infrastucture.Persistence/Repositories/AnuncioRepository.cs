@@ -16,6 +16,14 @@ namespace E_Market.Infrastructure.Persistence.Repository
             _dbContext = dbContext;
         }
 
-      
+        public virtual async Task<List<Anuncio>> GetAllAsync()
+        {
+            return await _dbContext.Set<Anuncio>()
+                .Include(a => a.Fotos)
+                .Include(a => a.User)
+                .ToListAsync();//Deferred execution
+        }
+
+
     }
 }

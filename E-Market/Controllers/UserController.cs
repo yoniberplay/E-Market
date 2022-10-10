@@ -79,7 +79,17 @@ namespace E_Market.Controllers
                 return RedirectToRoute(new { controller = "Home", action = "Index" });
             }
 
-            await _userService.Add(vm);
+            try
+            {
+                await _userService.Add(vm);
+            }
+            catch {
+                ModelState.AddModelError("Username", "Este nombre de usuario esta en uso.");
+                return View(vm); 
+            }
+
+           
+
             return RedirectToRoute(new { controller = "User", action = "Index" });
         }
     }

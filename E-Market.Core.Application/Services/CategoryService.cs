@@ -15,7 +15,7 @@ namespace E_Market.Core.Application.Services
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserViewModel userViewModel;
+        private readonly UserViewModel? userViewModel;
 
         public CategoryService(ICategoryRepository categoryRepository, IHttpContextAccessor httpContextAccessor)
         {

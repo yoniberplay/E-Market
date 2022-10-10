@@ -18,6 +18,8 @@ namespace E_Market.Infrastructure.Persistence.Contexts
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Fotos> Fotos { get; set; }
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             foreach(var entry in ChangeTracker.Entries<AuditableBaseEntity>())
@@ -53,6 +55,9 @@ namespace E_Market.Infrastructure.Persistence.Contexts
             modelBuilder.Entity<User>()
                 .ToTable("Users");
 
+            modelBuilder.Entity<Fotos>()
+                .ToTable("Fotos");
+
             #endregion
 
             #region "primary keys"
@@ -64,6 +69,9 @@ namespace E_Market.Infrastructure.Persistence.Contexts
 
             modelBuilder.Entity<User>()
                 .HasKey(user => user.Id);
+
+            modelBuilder.Entity<Fotos>()
+               .HasKey(foto => foto.Id);
             #endregion
 
             #region "Relationships"
@@ -78,6 +86,18 @@ namespace E_Market.Infrastructure.Persistence.Contexts
             .WithOne(anuncio => anuncio.User)
             .HasForeignKey(anuncio => anuncio.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Anuncio>()
+                .HasMany<Fotos>(a => a.Fotos)
+                .WithOne(f => f.anuncio)
+                .HasForeignKey(a => a.AnuncioID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+            .HasMany<Fotos>(user => user.Fotos)
+            .WithOne(f => f.User)
+            .HasForeignKey(f => f.AnuncioID).HasForeignKey(f => f.userId)
+            .OnDelete(DeleteBehavior.NoAction);
             #endregion
 
             #region "Property configurations"
@@ -111,6 +131,10 @@ namespace E_Market.Infrastructure.Persistence.Contexts
                Property(user => user.Username)
                .IsRequired();
 
+            modelBuilder.Entity<User>()
+    .HasIndex(user => user.Username)
+      .IsUnique();
+
             modelBuilder.Entity<User>().
               Property(user => user.Password)
               .IsRequired();
@@ -123,6 +147,19 @@ namespace E_Market.Infrastructure.Persistence.Contexts
                Property(user => user.Phone)
                .IsRequired();
 
+
+
+            #endregion
+
+            #region Fotos
+
+            modelBuilder.Entity<Fotos>().
+              Property(f => f.AnuncioID)
+              .IsRequired();
+
+            modelBuilder.Entity<Fotos>().
+               Property(f => f.ImageUrl)
+               .IsRequired();
             #endregion
 
             #endregion

@@ -20,6 +20,7 @@ namespace E_Market.Core.Domain.Entities
         public string Phone { get; set; }
 
         //navigation property
-        public ICollection<Anuncio> Anuncios { get; set; }
+        public ICollection<Anuncio>? Anuncios { get; set; }
+        public ICollection<Fotos>? Fotos { get; set; }
     }
 }

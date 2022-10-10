@@ -4,6 +4,7 @@ using E_Market.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Market.Infrastucture.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221009172321_UniqueUsername")]
+    partial class UniqueUsername
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -105,45 +107,6 @@ namespace E_Market.Infrastucture.Persistence.Migrations
                     b.ToTable("Categories", (string)null);
                 });
 
-            modelBuilder.Entity("E_Market.Core.Domain.Entities.Fotos", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AnuncioID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("userId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnuncioID");
-
-                    b.HasIndex("userId");
-
-                    b.ToTable("Fotos", (string)null);
-                });
-
             modelBuilder.Entity("E_Market.Core.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -211,30 +174,6 @@ namespace E_Market.Infrastucture.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("E_Market.Core.Domain.Entities.Fotos", b =>
-                {
-                    b.HasOne("E_Market.Core.Domain.Entities.Anuncio", "anuncio")
-                        .WithMany("Fotos")
-                        .HasForeignKey("AnuncioID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("E_Market.Core.Domain.Entities.User", "User")
-                        .WithMany("Fotos")
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("User");
-
-                    b.Navigation("anuncio");
-                });
-
-            modelBuilder.Entity("E_Market.Core.Domain.Entities.Anuncio", b =>
-                {
-                    b.Navigation("Fotos");
-                });
-
             modelBuilder.Entity("E_Market.Core.Domain.Entities.Category", b =>
                 {
                     b.Navigation("Anuncios");
@@ -243,8 +182,6 @@ namespace E_Market.Infrastucture.Persistence.Migrations
             modelBuilder.Entity("E_Market.Core.Domain.Entities.User", b =>
                 {
                     b.Navigation("Anuncios");
-
-                    b.Navigation("Fotos");
                 });
 #pragma warning restore 612, 618
         }

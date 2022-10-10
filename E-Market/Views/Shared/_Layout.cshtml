@@ -1,30 +1,46 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using E_Market.Core.Application.Helpers;
+@using E_Market.Core.Application.ViewModels.User
+@inject IHttpContextAccessor httpContextAccessor
+@{var User = httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - E_Market</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/E_Market.styles.css" asp-append-version="true" />
+    <title>@ViewData["Title"] - StockApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">E_Market</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-danger navbar-light border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand text-white fw-bold" asp-area="" asp-controller="@(User!= null ? "Home" : "User")" asp-action="Index">StockApp</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        @if (User != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white fw-bold" asp-area="" asp-controller="Anuncio" asp-action="Index">Mis anuncios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white fw-bold" asp-area="" asp-controller="Category" asp-action="Index">Mant. Categorias</a>
+                            </li>
+                            <li class="nav-item align-content-end">
+                                <a class="nav-link text-white fw-bold" asp-area="" asp-controller="User" asp-action="LogOut">Cerrar session</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item align-content-end">
+                                <a class="nav-link text-white fw-bold" asp-area="" asp-controller="User" asp-action="Register">Registrate!</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -38,7 +54,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - E_Market - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year - StockApp
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -1,7 +1,82 @@
-﻿@{
+﻿@using E_Market.Core.Application.ViewModels.Anuncios;
+@using E_Market.Core.Application.ViewModels.Categories;
+@model List<AnuncioViewModel>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-danger">
-    <h1 class="display-4">Welcome</h1>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-light">
+                    <h4>Filtros</h4>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Categorias</h4>
+
+                    <form method="post" asp-controller="Home" asp-action="Index">
+
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" value="null" type="radio" name="CategoryId" id="category-all" />
+                                <label class="form-check-label" for="category-all">Todas</label>
+                            </div>
+                        </div>
+
+                        @foreach (CategoryViewModel category in ViewBag.Categories)
+                        {
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" value="@category.Id" type="radio" name="CategoryId" id="category-@category.Id" />
+                                    <label class="form-check-label" for="category-@category.Id">@category.Name</label>
+                                </div>
+                            </div>
+                        }
+
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row">
+
+                @if (Model == null || Model.Count == 0)
+                {
+                    <h2>No hay productos</h2>
+                }
+                else
+                {
+                    @foreach (AnuncioViewModel item in Model)
+                    {
+                        <div class="col-4">
+                            <div class="card shadow-sm" >
+                                <img class="bd-placeholder-img card-img-top img-product-size" src="@item.ImageUrl"/>
+
+                                <div class="card-body">
+                                    <h4>@item.Name</h4>
+                                    <p class="card-text">@item.Description</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold">@item.CategoryName</span>
+                                        <small class="fw-bold fs-6">$@item.Price</small>
+                                    </div>
+                                </div>
+                                <a asp-controller="Home" asp-action="Detalleanuncio" asp-route-id="@item.Id" class="btn btn-primary">Ver anuncio</a>
+                            </div>
+
+                            
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+
+
 </div>

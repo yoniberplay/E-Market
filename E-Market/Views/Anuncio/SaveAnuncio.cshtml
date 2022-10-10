@@ -1,0 +1,84 @@
+﻿@using E_Market.Core.Application.ViewModels.Anuncios;
+@model SaveAnuncioViewModel
+@{
+    bool editMode = Model.Id == 0 ? false : true;
+    ViewData["Title"] = "Guardar anuncio";
+}
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card">
+                <div class="card-header bg-dark text-light">
+                    <h4>@(editMode ? $"Editando el anuncio: {Model.Name}" : "Creando un nuevo anuncio")</h4>
+                </div>
+                <div class="card-body">
+
+                    @if(Model.Categories == null || Model.Categories.Count == 0)
+                    {
+                        <h4>No hay categorias creadas</h4>
+                        <a asp-controller="Anuncio" asp-action="Index" class="btn btn-warning">Volver atras</a>
+                    }
+                    else
+                    {
+                <form method="post" asp-controller="Anuncio" asp-action="@(editMode ? "Edit":"Create")" enctype = "multipart/form-data">
+
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label">Nombre: </label>
+                        <input type="text" asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label">Descripcion: </label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                    </div>                
+
+                    <div class="mb-3">
+                        <label asp-for="Price" class="form-label">Precio: </label>
+                        <input type="number" step="any" asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="File" class="form-label">Seleccione un archivo:</label>
+                        @if (editMode)
+                        {
+                            <input asp-for="File" class="form-control" />
+                        }
+                        else
+                        {
+                            <input required asp-for="File" class="form-control" />
+                        }
+
+                        <span asp-validation-for="File" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="CategoryId" class="form-label">Categoria: </label>
+                        <select asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories,"Id","Name"))" class="form-select">
+                            <option value="0">Seleccione una opcion</option>
+
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+
+                    <input type="hidden" asp-for="Id" />
+
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a asp-controller="Anuncio" asp-action="Index" class="btn btn-warning">Volver atras</a>
+
+                </form>
+                    }
+
+                 
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+

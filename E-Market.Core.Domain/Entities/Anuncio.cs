@@ -22,5 +22,8 @@ namespace E_Market.Core.Domain.Entities
         //Navigation Property
         public User? User { get; set; }
 
+        //navigation property
+        public ICollection<Fotos>? Fotos { get; set; }
+
     }
 }

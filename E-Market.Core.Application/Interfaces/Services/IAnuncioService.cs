@@ -10,5 +10,6 @@ namespace E_Market.Core.Application.Interfaces.Services
     public interface IAnuncioService : IGenericService<SaveAnuncioViewModel, AnuncioViewModel>
     {
         Task<List<AnuncioViewModel>> GetAllViewModelWithFilters(FilterAnunciotViewModel filters);
+        Task<AnuncioViewModel> GetAnuncioyDetalles(int id);
     }
 }

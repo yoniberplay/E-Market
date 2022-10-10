@@ -8,6 +8,7 @@ using E_Market.Core.Domain.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using E_Market.Core.Application.ViewModels.Fotos;
 
 namespace E_Market.Core.Application.Services
 {
@@ -15,7 +16,7 @@ namespace E_Market.Core.Application.Services
     {
         private readonly IAnuncioRepository _anuncioRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserViewModel userViewModel;
+        private readonly UserViewModel? userViewModel;
 
         public AnuncioService(IAnuncioRepository anuncioRepository, IHttpContextAccessor httpContextAccessor)
         {
@@ -98,11 +99,40 @@ namespace E_Market.Core.Application.Services
             }).ToList();
         }
 
+        public async Task<AnuncioViewModel> GetAnuncioyDetalles(int Id)
+        {
+            var anuncioList = await _anuncioRepository.GetAllAsync();
+
+            Anuncio? Atemp = anuncioList.Find(x => x.Id == Id);
+            AnuncioViewModel Viwtemp = new AnuncioViewModel();
+            Viwtemp.Price = Atemp.Price;
+            Viwtemp.Description = Atemp.Description;
+            Viwtemp.CategoryId = Atemp.CategoryId;
+            Viwtemp.Id = Atemp.Id;
+            Viwtemp.UserId = Atemp.UserId;
+
+            FotoViewModel fotoViewModel = new FotoViewModel();
+
+            List<FotoViewModel> fttemp = new List<FotoViewModel>();
+
+            foreach (var fa in Atemp.Fotos)
+            {
+                fotoViewModel.AnuncioID = fa.Id;
+                fotoViewModel.ImageUrl = fa.ImageUrl;
+
+                fttemp.Add(fotoViewModel);
+            }
+
+            Viwtemp.fotos = fttemp;
+            return Viwtemp;
+            
+        }
+
         public async Task<List<AnuncioViewModel>> GetAllViewModelWithFilters(FilterAnunciotViewModel filters)
         {
             var anuncioList = await _anuncioRepository.GetAllWithIncludeAsync(new List<string> { "Category" });
 
-            var listViewModels = anuncioList.Where(anuncio => anuncio.UserId == userViewModel.Id).Select(anuncio => new AnuncioViewModel
+            var listViewModels = anuncioList.Where(anuncio => anuncio.UserId != userViewModel.Id).Select(anuncio => new AnuncioViewModel
             {
                 Name = anuncio.Name,
                 Description = anuncio.Description,
@@ -120,6 +150,9 @@ namespace E_Market.Core.Application.Services
 
             return listViewModels;
         }
+
+
+
 
     }
 }
