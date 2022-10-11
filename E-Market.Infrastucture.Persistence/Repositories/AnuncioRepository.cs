@@ -16,13 +16,16 @@ namespace E_Market.Infrastructure.Persistence.Repository
             _dbContext = dbContext;
         }
 
-        public virtual async Task<List<Anuncio>> GetAllAsync()
+#pragma warning disable CS0114 // Member hides inherited member; missing override keyword
+        public virtual async Task<List<Anuncio>> GetAllAsync()  //Se sobrescribe pero sigue cumpliendo su misma funcion SOLID
+#pragma warning restore CS0114 // Member hides inherited member; missing override keyword
         {
             return await _dbContext.Set<Anuncio>()
                 .Include(a => a.Fotos)
                 .Include(a => a.User)
-                .ToListAsync();//Deferred execution
+                .ToListAsync(); //Deferred execution
         }
+
 
 
     }

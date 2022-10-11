@@ -5,6 +5,7 @@ using E_Market.Core.Application.Interfaces.Services;
 using E_Market.Core.Application.ViewModels.Anuncios;
 using E_Market.Middlewares;
 using E_Market.Core.Application.ViewModels.User;
+using E_Market.Core.Application.ViewModels.Fotos;
 
 namespace E_Market.Controllers
 {
@@ -47,13 +48,16 @@ namespace E_Market.Controllers
             }
 
             //Todas las fotos de ese anuncio
+
+            List<FotoViewModel> listafotos = await _IFotoService.GetFotosporIDanuncio(id);
+
             AnuncioViewModel savm = await _anunciotService.GetAnuncioyDetalles(id);
             //Datos del propietario del anuncio
-            SaveUserViewModel user = await _userService.GetByIdSaveViewModel(savm.UserId);
+            UserViewModel user = await _userService.GetByIdViewModel(savm.UserId);
 
             ViewBag.User = user;
 
-            return View(savm);
+            return View(listafotos);
 
         }
 

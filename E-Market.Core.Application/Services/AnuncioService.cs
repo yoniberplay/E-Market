@@ -58,6 +58,7 @@ namespace E_Market.Core.Application.Services
             anuncioVm.ImageUrl = anuncio.ImageUrl;
             anuncioVm.Description = anuncio.Description;
             anuncioVm.CategoryId = anuncio.CategoryId;
+            anuncioVm.UserId = anuncio.UserId;
 
             return anuncioVm;
         }
@@ -103,7 +104,7 @@ namespace E_Market.Core.Application.Services
         {
             var anuncioList = await _anuncioRepository.GetAllAsync();
 
-            Anuncio? Atemp = anuncioList.Find(x => x.Id == Id);
+            Anuncio ? Atemp = anuncioList.Find(x => x.Id == Id);
             AnuncioViewModel Viwtemp = new AnuncioViewModel();
             Viwtemp.Price = Atemp.Price;
             Viwtemp.Description = Atemp.Description;

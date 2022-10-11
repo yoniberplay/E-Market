@@ -6,20 +6,23 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using E_Market.Middlewares;
+using E_Market.Core.Application.ViewModels.Fotos;
 
 namespace E_Market.Controllers
 {
     public class AnuncioController : Controller
     {
         private readonly IAnuncioService _anunciotService;
+        private readonly IFotoService _fotoService;
         private readonly ICategoryService _categoryService;
         private readonly ValidateUserSession _validateUserSession;
 
-        public AnuncioController(IAnuncioService anunciotService, ICategoryService categoryService, ValidateUserSession validateUserSession)
+        public AnuncioController(IAnuncioService anunciotService, ICategoryService categoryService, ValidateUserSession validateUserSession, IFotoService fotoService)
         {
             _anunciotService = anunciotService;
             _categoryService = categoryService;
             _validateUserSession = validateUserSession;
+            _fotoService = fotoService;
         }
         public async Task<IActionResult> Index()
         {
@@ -36,13 +39,13 @@ namespace E_Market.Controllers
             {
                 return RedirectToRoute(new { controller = "User", action = "Index" });
             }
-            SaveAnuncioViewModel vm = new();
+            SaveFotoViewModel vm = new();
             vm.Categories = await _categoryService.GetAllViewModel();
             return View("SaveAnuncio", vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(SaveAnuncioViewModel vm)
+        public async Task<IActionResult> Create(SaveFotoViewModel vm)
         {
             if (!_validateUserSession.HasUser())
             {
@@ -62,6 +65,26 @@ namespace E_Market.Controllers
                 AnuncioVm.ImageUrl = UploadFile(vm.File, AnuncioVm.Id);
 
                 await _anunciotService.Update(AnuncioVm);
+
+                vm.AnuncioID = AnuncioVm.Id;
+                vm.UserId = AnuncioVm.UserId;
+
+                if (vm.File2 != null)
+                    {
+                        vm.ImageUrl = UploadFile(vm.File2, AnuncioVm.Id);
+                        await _fotoService.Add(vm);
+                    }
+                    if (vm.File3 != null)
+                    {
+                        vm.ImageUrl = UploadFile(vm.File3, AnuncioVm.Id);
+                        await _fotoService.Add(vm);
+                    }
+                    if (vm.File4 != null)
+                    {
+                        vm.ImageUrl = UploadFile(vm.File4, AnuncioVm.Id);
+                        await _fotoService.Add(vm);
+                    }
+
             }
 
             return RedirectToRoute(new { controller = "Anuncio", action = "Index" });

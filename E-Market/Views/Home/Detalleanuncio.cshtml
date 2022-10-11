@@ -1,18 +1,18 @@
 ﻿@using E_Market.Core.Application.ViewModels.Anuncios;
 @using E_Market.Core.Application.ViewModels.Categories;
 @using E_Market.Core.Application.ViewModels.Fotos
-@model AnuncioViewModel
+@model List<FotoViewModel>
 @{
   
 }
 <h1>@ViewBag.User.Name</h1>
 <h1>@ViewBag.User.Email</h1>
 <h1>@ViewBag.User.Phone</h1>
-<h1>@Model.Name</h1>
-<h1>@Model.Description </h1>
-<h1>@Model.Price</h1>
 
-@foreach (FotoViewModel item in Model.fotos)
+<div class="card-body "  style="width: 18rem;">
+@foreach (FotoViewModel item in Model)
                     {
+
  <img class="bd-placeholder-img card-img-top img-product-size" src="@item.ImageUrl"/>
                     }
+                    </div>

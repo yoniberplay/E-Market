@@ -91,7 +91,10 @@ namespace E_Market.Core.Application.Services
             vm.Phone = user.Phone;
             vm.Email = user.Email;
             return vm;
+
         }
+
+
 
         public async Task<List<UserViewModel>> GetAllViewModel()
         {
@@ -107,6 +110,20 @@ namespace E_Market.Core.Application.Services
                 Phone = user.Phone
             }).ToList();
         }
-     
+
+        public async Task<UserViewModel> GetByIdViewModel(int id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+
+            UserViewModel vm = new();
+            vm.Id = user.Id;
+            vm.Name = user.Name;
+            vm.Username = user.Username;
+            vm.Password = user.Password;
+            vm.Phone = user.Phone;
+            vm.Email = user.Email;
+            return vm;
+
+        }
     }
 }

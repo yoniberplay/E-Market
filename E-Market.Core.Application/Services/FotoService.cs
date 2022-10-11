@@ -3,6 +3,7 @@ using E_Market.Core.Application.Interfaces.Repositories;
 using E_Market.Core.Application.Interfaces.Services;
 using E_Market.Core.Application.ViewModels.Fotos;
 using E_Market.Core.Application.ViewModels.User;
+using E_Market.Core.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,37 @@ namespace E_Market.Core.Application.Services
             userViewModel = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
         }
 
-        public Task<SaveFotoViewModel> Add(SaveFotoViewModel vm)
+
+        public async Task<List<FotoViewModel>> GetFotosporIDanuncio(int Id)
         {
-            throw new NotImplementedException();
+            var fotocioList = await _fotoRepository.GetAllAsync();
+
+            var listViewModels = fotocioList.Where(x => x.AnuncioID == Id).Select(Foto => new FotoViewModel
+            {
+                AnuncioID = Foto.AnuncioID,
+                ImageUrl = Foto.ImageUrl
+
+            }).ToList();
+
+            return listViewModels;
+        }
+
+        public async Task<SaveFotoViewModel> Add(SaveFotoViewModel vm)
+        {
+            Fotos foto = new();
+            foto.AnuncioID = vm.AnuncioID;
+            foto.ImageUrl = vm.ImageUrl;
+            foto.UserId = vm.UserId;
+
+            foto = await _fotoRepository.AddAsync(foto);
+
+            SaveFotoViewModel fotoVm = new();
+
+            fotoVm.Id = foto.Id;
+            fotoVm.ImageUrl = foto.ImageUrl;
+            fotoVm.UserId = foto.UserId;
+
+            return fotoVm;
         }
 
         public Task Delete(int id)
@@ -49,6 +78,8 @@ namespace E_Market.Core.Application.Services
         {
             throw new NotImplementedException();
         }
+
+       
 
         public Task Update(SaveFotoViewModel vm)
         {

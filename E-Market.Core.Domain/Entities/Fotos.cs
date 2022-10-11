@@ -12,7 +12,7 @@ namespace E_Market.Core.Domain.Entities
         public int AnuncioID { get; set; }
         public string? ImageUrl { get; set; }
 
-        public int userId { get; set; }
+        public int UserId { get; set; }
         public Anuncio? anuncio { get; set; }
         public User? User { get; set; }
     }

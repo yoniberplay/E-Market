@@ -19,6 +19,6 @@ namespace E_Market.Infrastucture.Persistence.Repositories
             _dbContext = dbContext;
         }
 
-
+        
     }
 }

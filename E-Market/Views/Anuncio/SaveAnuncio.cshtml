@@ -1,5 +1,5 @@
-﻿@using E_Market.Core.Application.ViewModels.Anuncios;
-@model SaveAnuncioViewModel
+﻿@using E_Market.Core.Application.ViewModels.Fotos;
+@model SaveFotoViewModel
 @{
     bool editMode = Model.Id == 0 ? false : true;
     ViewData["Title"] = "Guardar anuncio";
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="File" class="form-label">Seleccione un archivo:</label>
+                        <label asp-for="File" class="form-label">Seleccione fotos del anuncio:</label>
                         @if (editMode)
                         {
                             <input asp-for="File" class="form-control" />
@@ -50,6 +50,9 @@
                         else
                         {
                             <input required asp-for="File" class="form-control" />
+                            <input required asp-for="File2" class="form-control" />
+                            <input required asp-for="File3" class="form-control" />
+                            <input required asp-for="File4" class="form-control" />
                         }
 
                         <span asp-validation-for="File" class="text-danger"></span>

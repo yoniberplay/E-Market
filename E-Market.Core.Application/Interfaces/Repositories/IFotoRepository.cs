@@ -9,5 +9,6 @@ namespace E_Market.Core.Application.Interfaces.Repositories
 {
     public interface IFotoRepository : IGenericRepository<Fotos>
     {
+
     }
 }

@@ -96,7 +96,7 @@ namespace E_Market.Infrastructure.Persistence.Contexts
             modelBuilder.Entity<User>()
             .HasMany<Fotos>(user => user.Fotos)
             .WithOne(f => f.User)
-            .HasForeignKey(f => f.AnuncioID).HasForeignKey(f => f.userId)
+            .HasForeignKey(f => f.AnuncioID).HasForeignKey(f => f.UserId)
             .OnDelete(DeleteBehavior.NoAction);
             #endregion
 

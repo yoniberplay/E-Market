@@ -10,5 +10,6 @@ namespace E_Market.Core.Application.Interfaces.Services
     public interface IFotoService : IGenericService<SaveFotoViewModel, FotoViewModel>
     {
         Task<List<FotoViewModel>> GetAllFotos(int id);
+        Task<List<FotoViewModel>> GetFotosporIDanuncio(int Id);
     }
 }
