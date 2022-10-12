@@ -14,10 +14,13 @@ namespace E_Market.Core.Application.ViewModels.Fotos
         public int Idfoto { get; set; }
         public int AnuncioID { get; set; }
 
+
         [DataType(DataType.Upload)]
         public IFormFile? File2 { get; set; }
+
         [DataType(DataType.Upload)]
         public IFormFile? File3 { get; set; }
+
         [DataType(DataType.Upload)]
         public IFormFile? File4 { get; set; }
 

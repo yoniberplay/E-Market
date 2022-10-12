@@ -90,14 +90,10 @@ namespace E_Market.Infrastructure.Persistence.Contexts
             modelBuilder.Entity<Anuncio>()
                 .HasMany<Fotos>(a => a.Fotos)
                 .WithOne(f => f.anuncio)
-                .HasForeignKey(a => a.AnuncioID)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(f => f.AnuncioID)
+                .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<User>()
-            .HasMany<Fotos>(user => user.Fotos)
-            .WithOne(f => f.User)
-            .HasForeignKey(f => f.AnuncioID).HasForeignKey(f => f.UserId)
-            .OnDelete(DeleteBehavior.NoAction);
+           
             #endregion
 
             #region "Property configurations"

@@ -63,11 +63,14 @@ namespace E_Market.Controllers
             if (AnuncioVm.Id != 0 && AnuncioVm != null)
             {
                 AnuncioVm.ImageUrl = UploadFile(vm.File, AnuncioVm.Id);
-
                 await _anunciotService.Update(AnuncioVm);
 
+
+                vm.ImageUrl = AnuncioVm.ImageUrl;
                 vm.AnuncioID = AnuncioVm.Id;
                 vm.UserId = AnuncioVm.UserId;
+
+                await _fotoService.Add(vm);
 
                 if (vm.File2 != null)
                     {
@@ -98,12 +101,22 @@ namespace E_Market.Controllers
             }
 
             SaveAnuncioViewModel vm = await _anunciotService.GetByIdSaveViewModel(id);
-            vm.Categories = await _categoryService.GetAllViewModel();
-            return View("SaveAnuncio", vm);
+
+            SaveFotoViewModel sf = new();
+            sf.Id = vm.Id;
+            sf.Name = vm.Name;
+            sf.Description = vm.Description;
+            sf.Categories = vm.Categories;
+            sf.Price = vm.Price;
+            sf.CategoryId = vm.CategoryId;
+            sf.UserId = vm.UserId;
+
+            sf.Categories = await _categoryService.GetAllViewModel();
+            return View("SaveAnuncio", sf);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(SaveAnuncioViewModel vm)
+        public async Task<IActionResult> Edit(SaveFotoViewModel vm)
         {
             if (!_validateUserSession.HasUser())
             {
@@ -116,9 +129,17 @@ namespace E_Market.Controllers
                 return View("SaveAnuncio", vm);
             }
 
-            SaveAnuncioViewModel AnuncioVm = await _anunciotService.GetByIdSaveViewModel(vm.Id);
-            vm.ImageUrl = UploadFile(vm.File, vm.Id, true, AnuncioVm.ImageUrl);
-            await _anunciotService.Update(vm);
+            SaveAnuncioViewModel sf = await _anunciotService.GetByIdSaveViewModel(vm.Id);
+            sf.Name = vm.Name;
+            sf.Description = vm.Description;
+            sf.Categories = vm.Categories;
+            sf.Price = vm.Price;
+            sf.CategoryId = vm.CategoryId;
+            sf.UserId = vm.UserId;
+
+            vm.ImageUrl = UploadFile(vm.File, vm.Id, true, sf.ImageUrl);
+            await _anunciotService.Update(sf);
+
             return RedirectToRoute(new { controller = "Anuncio", action = "Index" });
         }
 

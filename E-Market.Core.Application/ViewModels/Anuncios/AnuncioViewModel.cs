@@ -1,4 +1,5 @@
 ﻿using E_Market.Core.Application.ViewModels.Fotos;
+using E_Market.Core.Application.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace E_Market.Core.Application.ViewModels.Anuncios
         public string? Description { get; set; }
         public string? ImageUrl { get; set; }
         public double? Price { get; set; }
+
+        public UserViewModel userViewModel { get; set; }
 
         public string CategoryName { get; set; }
         public int CategoryId { get; set; }

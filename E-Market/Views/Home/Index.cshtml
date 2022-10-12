@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-9">
+        <div class="col-9 cards-wrapper">
             <div class="row">
 
                 @if (Model == null || Model.Count == 0)
@@ -55,11 +55,11 @@
                     @foreach (AnuncioViewModel item in Model)
                     {
                         <div class="col-4">
-                            <div class="card shadow-sm" >
-                                <img class="bd-placeholder-img card-img-top img-product-size" src="@item.ImageUrl"/>
-
-                                <div class="card-body">
-                                    <h4>@item.Name</h4>
+                            <div class="card-group">
+                            <div class="card shadow-sm card zoom" >
+                                <img class="bd-placeholder-img card-img-top img-product-size" src="@item.ImageUrl" width="400" height="200"/>
+                                <div class="card-body ">
+                                    <h5 class="card-title" >@item.Name</h5>
                                     <p class="card-text">@item.Description</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <span class="fw-bold">@item.CategoryName</span>
@@ -69,6 +69,7 @@
                                 <a asp-controller="Home" asp-action="Detalleanuncio" asp-route-id="@item.Id" class="btn btn-primary">Ver anuncio</a>
                             </div>
 
+                             </div>
                             
                         </div>
                     }

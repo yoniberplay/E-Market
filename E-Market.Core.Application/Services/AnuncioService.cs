@@ -87,7 +87,7 @@ namespace E_Market.Core.Application.Services
         public async Task<List<AnuncioViewModel>> GetAllViewModel()
         {
             var anuncioList = await _anuncioRepository.GetAllWithIncludeAsync(new List<string> { "Category" });
-
+            
             return anuncioList.Where(anuncio => anuncio.UserId == userViewModel.Id).Select(anuncio => new AnuncioViewModel
             {
                 Name = anuncio.Name,
@@ -96,7 +96,8 @@ namespace E_Market.Core.Application.Services
                 Price = anuncio.Price,
                 ImageUrl = anuncio.ImageUrl,
                 CategoryName = anuncio.Category.Name,
-                CategoryId = anuncio.Category.Id
+                CategoryId = anuncio.Category.Id,
+                
             }).ToList();
         }
 
