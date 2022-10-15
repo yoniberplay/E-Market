@@ -16,12 +16,13 @@ namespace E_Market.Core.Application.ViewModels.Anuncios
         public string? Description { get; set; }
         public string? ImageUrl { get; set; }
         public double? Price { get; set; }
+        public DateTime? Created { get; set; }
 
-        public UserViewModel userViewModel { get; set; }
+        public UserViewModel? userViewModel = new UserViewModel();
 
         public string CategoryName { get; set; }
         public int CategoryId { get; set; }
 
-        public List<FotoViewModel>? fotos { get; set; }
+        public List<FotoViewModel>? fotos = new();
     }
 }

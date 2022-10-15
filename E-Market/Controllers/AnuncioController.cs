@@ -39,13 +39,13 @@ namespace E_Market.Controllers
             {
                 return RedirectToRoute(new { controller = "User", action = "Index" });
             }
-            SaveFotoViewModel vm = new();
+            SaveAnuncioViewModel vm = new();
             vm.Categories = await _categoryService.GetAllViewModel();
             return View("SaveAnuncio", vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(SaveFotoViewModel vm)
+        public async Task<IActionResult> Create(SaveAnuncioViewModel vm)
         {
             if (!_validateUserSession.HasUser())
             {
@@ -65,27 +65,28 @@ namespace E_Market.Controllers
                 AnuncioVm.ImageUrl = UploadFile(vm.File, AnuncioVm.Id);
                 await _anunciotService.Update(AnuncioVm);
 
+                SaveFotoViewModel SavingPhotos = new SaveFotoViewModel();
 
-                vm.ImageUrl = AnuncioVm.ImageUrl;
-                vm.AnuncioID = AnuncioVm.Id;
-                vm.UserId = AnuncioVm.UserId;
+                SavingPhotos.ImageUrl = AnuncioVm.ImageUrl;
+                SavingPhotos.AnuncioID = AnuncioVm.Id;
+                SavingPhotos.UserId = AnuncioVm.UserId;
 
-                await _fotoService.Add(vm);
+                await _fotoService.Add(SavingPhotos);
 
                 if (vm.File2 != null)
                     {
-                        vm.ImageUrl = UploadFile(vm.File2, AnuncioVm.Id);
-                        await _fotoService.Add(vm);
+                    SavingPhotos.ImageUrl = UploadFile(vm.File2, AnuncioVm.Id);
+                        await _fotoService.Add(SavingPhotos);
                     }
                     if (vm.File3 != null)
                     {
-                        vm.ImageUrl = UploadFile(vm.File3, AnuncioVm.Id);
-                        await _fotoService.Add(vm);
+                    SavingPhotos.ImageUrl = UploadFile(vm.File3, AnuncioVm.Id);
+                        await _fotoService.Add(SavingPhotos);
                     }
                     if (vm.File4 != null)
                     {
-                        vm.ImageUrl = UploadFile(vm.File4, AnuncioVm.Id);
-                        await _fotoService.Add(vm);
+                    SavingPhotos.ImageUrl = UploadFile(vm.File4, AnuncioVm.Id);
+                        await _fotoService.Add(SavingPhotos);
                     }
 
             }
@@ -102,21 +103,21 @@ namespace E_Market.Controllers
 
             SaveAnuncioViewModel vm = await _anunciotService.GetByIdSaveViewModel(id);
 
-            SaveFotoViewModel sf = new();
-            sf.Id = vm.Id;
-            sf.Name = vm.Name;
-            sf.Description = vm.Description;
-            sf.Categories = vm.Categories;
-            sf.Price = vm.Price;
-            sf.CategoryId = vm.CategoryId;
-            sf.UserId = vm.UserId;
+            //SaveFotoViewModel sf = new();
+            //sf.Id = vm.Id;
+            //sf.Name = vm.Name;
+            //sf.Description = vm.Description;
+            //sf.Categories = vm.Categories;
+            //sf.Price = vm.Price;
+            //sf.CategoryId = vm.CategoryId;
+            //sf.UserId = vm.UserId;
 
-            sf.Categories = await _categoryService.GetAllViewModel();
-            return View("SaveAnuncio", sf);
+            vm.Categories = await _categoryService.GetAllViewModel();
+            return View("SaveAnuncio", vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(SaveFotoViewModel vm)
+        public async Task<IActionResult> Edit(SaveAnuncioViewModel vm)
         {
             if (!_validateUserSession.HasUser())
             {
@@ -130,16 +131,20 @@ namespace E_Market.Controllers
             }
 
             SaveAnuncioViewModel sf = await _anunciotService.GetByIdSaveViewModel(vm.Id);
+            sf.Id=vm.Id;
             sf.Name = vm.Name;
             sf.Description = vm.Description;
             sf.Categories = vm.Categories;
             sf.Price = vm.Price;
             sf.CategoryId = vm.CategoryId;
             sf.UserId = vm.UserId;
+            
+            if (vm.File != null)
+            {
+                sf.ImageUrl = UploadFile(vm.File, vm.Id);
+            }
 
-            vm.ImageUrl = UploadFile(vm.File, vm.Id, true, sf.ImageUrl);
             await _anunciotService.Update(sf);
-
             return RedirectToRoute(new { controller = "Anuncio", action = "Index" });
         }
 
@@ -156,6 +161,7 @@ namespace E_Market.Controllers
         [HttpPost]
         public async Task<IActionResult> DeletePost(int id)
         {
+
             if (!_validateUserSession.HasUser())
             {
                 return RedirectToRoute(new { controller = "User", action = "Index" });

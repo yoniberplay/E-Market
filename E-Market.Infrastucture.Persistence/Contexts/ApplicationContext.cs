@@ -91,7 +91,7 @@ namespace E_Market.Infrastructure.Persistence.Contexts
                 .HasMany<Fotos>(a => a.Fotos)
                 .WithOne(f => f.anuncio)
                 .HasForeignKey(f => f.AnuncioID)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
            
             #endregion

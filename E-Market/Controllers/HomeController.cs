@@ -33,9 +33,15 @@ namespace E_Market.Controllers
             {
                 return RedirectToRoute(new { controller = "User", action = "Index" });
             }
+
+            vm.Categories = await _categoryService.GetAllViewModel();
             
             ViewBag.Categories = await _categoryService.GetAllViewModel();
-            return View(await _anunciotService.GetAllViewModelWithFilters(vm));
+
+            ViewBag.Anuncios = await _anunciotService.GetAllViewModelWithFilters(vm);
+            
+
+            return View(vm);
         }
 
 
@@ -47,17 +53,9 @@ namespace E_Market.Controllers
                 return RedirectToRoute(new { controller = "User", action = "Index" });
             }
 
-            //Todas las fotos de ese anuncio
-
-            List<FotoViewModel> listafotos = await _IFotoService.GetFotosporIDanuncio(id);
-
             AnuncioViewModel savm = await _anunciotService.GetAnuncioyDetalles(id);
-            //Datos del propietario del anuncio
-            UserViewModel user = await _userService.GetByIdViewModel(savm.UserId);
 
-            ViewBag.User = user;
-
-            return View(listafotos);
+            return View(savm);
 
         }
 

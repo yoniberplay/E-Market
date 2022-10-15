@@ -8,7 +8,7 @@
 
     <div class="col-6 offset-3" >
         <div class="card">
-            <div class="card-header bg-danger text-light">
+            <div class="card-header bg-primary text-light">
                 <h4>Esta seguro que desea eliminar el anuncio @Model.Name?</h4>
             </div>
             <div class="card-body">
@@ -17,9 +17,10 @@
                 
                     <input type="hidden" asp-for="Id" />
 
+                    <div class="text-center">
                     <button type="submit" class="btn btn-danger">Eliminar</button>
-                    <a asp-controller="Anuncio" asp-action="Index" class="btn btn-warning">Cancelar</a>
-                
+                    <a asp-controller="Anuncio" asp-action="Index" class="btn btn-secondary ">Cancelar</a>
+                    </div>
                 </form>
 
             </div>

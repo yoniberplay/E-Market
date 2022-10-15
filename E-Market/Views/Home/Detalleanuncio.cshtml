@@ -1,18 +1,43 @@
 ﻿@using E_Market.Core.Application.ViewModels.Anuncios;
 @using E_Market.Core.Application.ViewModels.Categories;
 @using E_Market.Core.Application.ViewModels.Fotos
-@model List<FotoViewModel>
+@model AnuncioViewModel
 @{
-  
+    String fecha = Model.Created.Value.ToString("dd MMMM yyyy");
 }
-<h1>@ViewBag.User.Name</h1>
-<h1>@ViewBag.User.Email</h1>
-<h1>@ViewBag.User.Phone</h1>
+<h1>@Model.userViewModel.Name</h1>
+<h1>@Model.userViewModel.Email</h1>
+<h1>@Model.userViewModel.Phone</h1>
 
-<div class="card-body "  style="width: 18rem;">
-@foreach (FotoViewModel item in Model)
+<h1>@Model.Name</h1>
+<h1>@Model.CategoryName</h1>
+<h1>@Model.Description</h1>
+<h1>@fecha</h1>
+
+
+
+                    
+<div id="carouselExampleControls" class="carousel slide w-50" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" >
+      <img src="@Model.fotos[0].ImageUrl" class="d-block w-100" width="800" height="400">
+    </div>
+
+    
+    @for (int i = 1; i < Model.fotos.Count(); i++) 
                     {
-
- <img class="bd-placeholder-img card-img-top img-product-size" src="@item.ImageUrl"/>
+              <div class="carousel-item">
+ <img class="d-block w-100" src="@Model.fotos[i].ImageUrl"  width="800" height="400">
+  </div>
                     }
-                    </div>
+
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>

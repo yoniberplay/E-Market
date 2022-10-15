@@ -26,6 +26,15 @@ namespace E_Market.Infrastructure.Persistence.Repository
                 .ToListAsync(); //Deferred execution
         }
 
+        public virtual async Task<Anuncio> GetBywithRelationship(int id)
+        {
+            var temp = await _dbContext.Set<Anuncio>().Where(a => a.Id == id).Include(a => a.Fotos).Include(a => a.User).Include(a => a.Category).ToListAsync();
+            return temp.First();
+
+            //POR SI ACASO
+            //  return _dbContext.Anuncios.Where(a => a.Id == id).Include(a => a.Fotos).Include(a => a.User).Include(a => a.Category).FirstOrDefault(); 
+            //return a;
+        }
 
 
     }

@@ -12,5 +12,7 @@ namespace E_Market.Core.Application.ViewModels.Categories
         public string Name { get; set; }
         public string Description { get; set; }
         public int ProductsQuantity { get; set; }
+
+        public Boolean Busqueda { get; set; }
     }
 }

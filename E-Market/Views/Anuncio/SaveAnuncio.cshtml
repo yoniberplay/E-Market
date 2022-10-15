@@ -1,5 +1,5 @@
-﻿@using E_Market.Core.Application.ViewModels.Fotos;
-@model SaveFotoViewModel
+﻿@using E_Market.Core.Application.ViewModels.Anuncios;
+@model SaveAnuncioViewModel
 @{
     bool editMode = Model.Id == 0 ? false : true;
     ViewData["Title"] = "Guardar anuncio";
@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-6 offset-3">
             <div class="card">
-                <div class="card-header bg-dark text-light">
+                <div class="card-header bg-primary text-light" style="text-align: center;">
                     <h4>@(editMode ? $"Editando el anuncio: {Model.Name}" : "Creando un nuevo anuncio")</h4>
                 </div>
                 <div class="card-body">
@@ -18,7 +18,7 @@
                     @if(Model.Categories == null || Model.Categories.Count == 0)
                     {
                         <h4>No hay categorias creadas</h4>
-                        <a asp-controller="Anuncio" asp-action="Index" class="btn btn-warning">Volver atras</a>
+                        <a asp-controller="Anuncio" asp-action="Index" class="btn btn-secondary ">Volver atras</a>
                     }
                     else
                     {
@@ -72,9 +72,10 @@
 
                     <input type="hidden" asp-for="Id" />
 
+                    <div class="mb-3 text-center">
                     <button type="submit" class="btn btn-primary">Guardar</button>
-                    <a asp-controller="Anuncio" asp-action="Index" class="btn btn-warning">Volver atras</a>
-
+                    <a asp-controller="Anuncio" asp-action="Index" class="btn btn-secondary">Volver atras</a>
+                    </div>
                 </form>
                     }
 

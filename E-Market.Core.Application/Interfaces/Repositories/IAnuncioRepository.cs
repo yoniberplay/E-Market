@@ -9,6 +9,6 @@ namespace E_Market.Core.Application.Interfaces.Repositories
 {
     public interface IAnuncioRepository : IGenericRepository<Anuncio>
     {
-   
+        Task<Anuncio> GetBywithRelationship(int id);
     }
 }

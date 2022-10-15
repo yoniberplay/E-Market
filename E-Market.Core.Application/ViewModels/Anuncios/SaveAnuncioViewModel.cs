@@ -27,6 +27,17 @@ namespace E_Market.Core.Application.ViewModels.Anuncios
         [DataType(DataType.Upload)]
         public IFormFile? File { get; set; }
 
+        [DataType(DataType.Upload)]
+        public IFormFile? File2 { get; set; }
+
+        [DataType(DataType.Upload)]
+        public IFormFile? File3 { get; set; }
+
+        [DataType(DataType.Upload)]
+        public IFormFile? File4 { get; set; }
+
+        public int AnuncioID { get; set; }
+
         public int UserId { get; set; }
 
     }

@@ -4,26 +4,46 @@
     ViewData["Title"] = "Login";
 }
 
-<div class="row mt-5">
-    <div class="col-6 offset-3">
-        <div class="card shadow-sm" >
-            <div class="card-body">
-                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+  <div class="container py-5 h-100 ">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card" style="border-radius: 1rem;">
+          <div class="row g-0 ">
+            <div class="col-md-6 col-lg-5 d-none d-md-block ">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+            </div>
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+                  
                 <form method="post" asp-controller="User" asp-action="Index">
-                    <div class="mb-3">
-                        <label asp-for="Username" class="form-label">Nombre de usuario</label>
-                        <input class="form-control" asp-for="Username">
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Password" class="form-label">Contraseña</label>
-                        <input class="form-control" asp-for="Password">                        
-                    </div>
 
-                    <button type="submit" class="btn btn-primary">Iniciar sección</button>
+                  <div class="d-flex justify-content-center mb-3 pb-1">
+                    <span class="h1 fw-bold mb-0">Yoni-Market</span>
+                  </div>
+
+                  <h5 class="fw-normal mb-3 pb-3"  style="text-align: center;">Inicia sesión para vender y comprar</h5>
+
+                  <div class="form-outline mb-4">
+                    <input class="form-control" asp-for="Username" placeholder="Usuario">
+                  </div>
+
+                  <div class="form-outline mb-4">
+                     <input class="form-control" asp-for="Password" placeholder="Contraseña">    
+                  </div>
+                  @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                  <div class="pt-1 mb-4 d-flex justify-content-center">
+                    <button class="btn  btn-lg btn-block btn-primary" type="submit">Iniciar sesión</button>
+                  </div>
+
+                  
                 </form>
 
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 

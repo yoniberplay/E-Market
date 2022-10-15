@@ -103,26 +103,33 @@ namespace E_Market.Core.Application.Services
 
         public async Task<AnuncioViewModel> GetAnuncioyDetalles(int Id)
         {
-            var anuncioList = await _anuncioRepository.GetAllAsync();
+            var anuncioList = await _anuncioRepository.GetBywithRelationship(Id);
 
-            Anuncio ? Atemp = anuncioList.Find(x => x.Id == Id);
             AnuncioViewModel Viwtemp = new AnuncioViewModel();
-            Viwtemp.Price = Atemp.Price;
-            Viwtemp.Description = Atemp.Description;
-            Viwtemp.CategoryId = Atemp.CategoryId;
-            Viwtemp.Id = Atemp.Id;
-            Viwtemp.UserId = Atemp.UserId;
 
-            FotoViewModel fotoViewModel = new FotoViewModel();
+            Viwtemp.Name = anuncioList.Name;
+            Viwtemp.Price = anuncioList.Price;
+            Viwtemp.Description = anuncioList.Description;
+            Viwtemp.CategoryId = anuncioList.CategoryId;
+            Viwtemp.CategoryName = anuncioList.Category.Name;
+            Viwtemp.Id = anuncioList.Id;
+            Viwtemp.Created = anuncioList.Created;
+            Viwtemp.UserId = anuncioList.UserId;
+
+            Viwtemp.userViewModel.Name = anuncioList.User.Name;
+            Viwtemp.userViewModel.Email = anuncioList.User.Email;
+            Viwtemp.userViewModel.Phone = anuncioList.User.Phone;
+
 
             List<FotoViewModel> fttemp = new List<FotoViewModel>();
 
-            foreach (var fa in Atemp.Fotos)
+            foreach (var fa in anuncioList.Fotos)
             {
-                fotoViewModel.AnuncioID = fa.Id;
-                fotoViewModel.ImageUrl = fa.ImageUrl;
-
-                fttemp.Add(fotoViewModel);
+                fttemp.Add(new FotoViewModel()
+                {
+                 AnuncioID = fa.Id,
+                ImageUrl = fa.ImageUrl
+            });
             }
 
             Viwtemp.fotos = fttemp;
@@ -147,7 +154,8 @@ namespace E_Market.Core.Application.Services
 
             if (filters.CategoryId != null)
             {
-                listViewModels = listViewModels.Where(anuncio => anuncio.CategoryId == filters.CategoryId.Value).ToList();
+                listViewModels = listViewModels.Where(product => product.CategoryId == filters.CategoryId.Value).ToList();
+
             }
 
             return listViewModels;
